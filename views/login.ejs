@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login de Usuário</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4; }
+        .login-box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 300px; }
+        input[type="email"], input[type="password"] { width: 100%; padding: 10px; margin: 8px 0 16px 0; display: inline-block; border: 1px solid #ccc; box-sizing: border-box; }
+        button { background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; cursor: pointer; width: 100%; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <h2>Entrar no Sistema</h2>
+
+        <% if (typeof erro !== 'undefined' && erro) { %>
+            <p style="color: red; font-weight: bold;">
+                <% if (erro === 'usuario') { %>
+                    Usuário não encontrado.
+                <% } else if (erro === 'senha') { %>
+                    Senha incorreta.
+                <% } else { %>
+                    Por favor, faça o login.
+                <% } %>
+            </p>
+        <% } %>
+        
+        <% if (typeof sucesso !== 'undefined' && sucesso === 'cadastro') { %>
+            <p style="color: green; font-weight: bold;">
+                Cadastro realizado com sucesso! Faça seu login.
+            </p>
+        <% } %>
+
+        <form action="/login" method="POST">
+            
+            <label for="email"><b>Email:</b></label>
+            <input type="email" placeholder="Digite seu Email" name="email" required>
+
+            <label for="senha"><b>Senha:</b></label>
+            <input type="password" placeholder="Digite sua Senha" name="senha" required>
+            
+            <button type="submit">Acessar</button>
+        </form>
+
+        <p style="margin-top: 15px; text-align: center;"><a href="/register">Não tem cadastro? Cadastre-se aqui.</a></p>
+    </div>
+
+</body>
+</html>

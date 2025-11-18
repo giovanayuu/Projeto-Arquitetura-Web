@@ -1,42 +1,32 @@
 const User = require('../models/User');
+// **AVISO:** O import do bcrypt foi removido, pois ele deve ser usado apenas no authController.
 
 const userController = {
 
-  // READ: Buscar todos
+  // READ: Buscar todos (Esta rota é protegida pelo middleware isAuth no server.js)
   getAllUsers: async (req, res) => {
     try {
       // O Mongoose busca no banco (aguarda a promessa)
       const users = await User.find(); 
+      // Você pode usar 'req.session.userName' aqui para personalizar a view!
       res.render('usersList', { usuarios: users });
     } catch (error) {
       res.status(500).send("Erro ao buscar usuários: " + error.message);
     }
   },
 
-  // Renderizar form de criação (Não muda nada, pois não acessa banco)
+  // Renderizar form de criação (Mantido para criar um usuário **APÓS LOGIN**, se for o caso)
+  // NOTA: Se este form for para **registro público**, ele deve ser renderizado por authController.getRegisterForm.
   getNewUserForm: (req, res) => {
     res.render('formUsuario');
   },
 
-  // CREATE: Salvar no Banco
-  createNewUser: async (req, res) => {
-    try {
-      const novoUsuario = {
-        nome: req.body.nome_usuario,
-        cargo: req.body.cargo_usuario
-      };
-      
-      // Mágica do Mongoose: cria e salva numa linha só
-      await User.create(novoUsuario);
-      
-      // PRG Pattern
-      res.redirect('/users');
-    } catch (error) {
-      res.status(500).send("Erro ao criar usuário: " + error.message);
-    }
-  },
+  // **MÉTODO createNewUser FOI REMOVIDO.**
+  // Motivo: A lógica de Hashing e Registro de novo usuário foi movida para 
+  // o método 'registerUser' dentro do 'authController.js' para garantir a 
+  // Separação de Responsabilidades.
 
-  // --- NOVO: DELETE ---
+  // --- DELETE ---
   deleteUser: async (req, res) => {
     try {
       const id = req.params.id; // Pega o ID da URL
@@ -47,7 +37,7 @@ const userController = {
     }
   },
 
-  // --- NOVO: UPDATE (Parte 1 - Mostrar o Form Preenchido) ---
+  // --- UPDATE (Parte 1 - Mostrar o Form Preenchido) ---
   getEditUserForm: async (req, res) => {
     try {
       const id = req.params.id;
@@ -58,7 +48,7 @@ const userController = {
     }
   },
 
-  // --- NOVO: UPDATE (Parte 2 - Salvar Alteração) ---
+  // --- UPDATE (Parte 2 - Salvar Alteração) ---
   updateUser: async (req, res) => {
     try {
       const id = req.params.id;
