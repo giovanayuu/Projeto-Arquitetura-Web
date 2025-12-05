@@ -3,16 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Usuário</title>
-    </head>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --danger-color: #dc3545;
+            --text-color: #343a40;
+            --bg-color: #e9ecef;
+            --card-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        .register-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            width: 400px;
+            max-width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            background-color: #f8d7da;
+            border: 1px solid var(--danger-color);
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .link-login {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .link-login a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .link-login a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
 <body>
     <div class="register-box">
         <h2>Criar Nova Conta</h2>
 
         <% if (typeof erro !== 'undefined' && erro === 'email_existente') { %>
-            <p style="color: red; font-weight: bold;">Este e-mail já está cadastrado!</p>
+            <p class="error-message">Este e-mail já está cadastrado!</p>
         <% } %>
 
         <form action="/register" method="POST">
+            <!-- [TAREFA 4] Token Anti-CSRF -->
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             
             <label for="nome"><b>Nome:</b></label>
             <input type="text" placeholder="Seu Nome Completo" name="nome" required>
@@ -29,7 +135,7 @@
             <button type="submit">Cadastrar</button>
         </form>
 
-        <p><a href="/login">Já tenho cadastro. Fazer Login.</a></p>
+        <p class="link-login"><a href="/login">Já tenho cadastro. Fazer Login.</a></p>
     </div>
 </body>
 </html>
