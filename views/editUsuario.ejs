@@ -3,23 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Usuário</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            color: #343a40;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {text-decoration: underline;
+    }
+</style>
 </head>
 <body>
-    <h1>Editar Usuário</h1>
-    
-    <form action="/users/update/<%= user._id %>" method="POST">
-        <div>
-            <label>Nome:</label>
-            <input type="text" name="nome_usuario" value="<%= user.nome %>" required>
-        </div>
-        <div>
-            <label>Cargo:</label>
-            <input type="text" name="cargo_usuario" value="<%= user.cargo %>" required>
-        </div>
-        <br>
-        <button type="submit">💾 Salvar Alterações</button>
-    </form>
+    <h1>Editar Usuário</h1><form action="/users/update/<%= user._id %>" method="POST">
+    <!-- [TAREFA 4] Token Anti-CSRF -->
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">    <div>
+        <label>Nome:</label>
+        <input type="text" name="nome_usuario" value="<%= user.nome %>" required>
+    </div>
+    <div>
+        <label>Cargo:</label>
+        <input type="text" name="cargo_usuario" value="<%= user.cargo %>" required>
+    </div>
     <br>
-    <a href="/users">Cancelar</a>
+    <button type="submit">💾 Salvar Alterações</button>
+</form>
+<br>
+<a href="/users">← Cancelar</a>
 </body>
 </html>
