@@ -1,23 +1,115 @@
-<form action="/users" method="POST">
-    <div>
-        <label for="nome">Nome do Usuário:</label>
-        <input type="text" id="nome" name="nome_usuario">
-    </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Novo Usuário</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-    <div>
-        <label for="cargo">Cargo:</label>
-        <input type="text" id="cargo" name="cargo_usuario">
-    </div>
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
 
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-    </div>
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
 
-    <div>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password">
-    </div>
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            color: #343a40;
+        }
 
-    <button type="submit">Adicionar Usuário</button>
-</form>
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adicionar Novo Usuário (Admin)</h1>
+
+    <form action="/users" method="POST">
+        <!-- [TAREFA 4] Token Anti-CSRF -->
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        
+        <div>
+            <label for="nome">Nome do Usuário:</label>
+            <input type="text" id="nome" name="nome_usuario" required>
+        </div>
+
+        <div>
+            <label for="cargo">Cargo:</label>
+            <input type="text" id="cargo" name="cargo_usuario" required>
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit">Adicionar Usuário</button>
+    </form>
+    
+    <br>
+    <a href="/users">← Voltar para Lista</a>
+</body>
+</html>
